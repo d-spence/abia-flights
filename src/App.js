@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { fetchApiData } from './utilities';
+import { 
+  fetchApiData,
+  sortFlights,
+} from './utilities';
 import {
   apiUrl,
   arrivalsUrl,
@@ -16,7 +19,8 @@ import FlightList from './components/FlightList';
 function App() {
   const [arrivals, setArrivals] = useState(null);
   const [departures, setDepartures] = useState(null);
-  const [flights, setFlights] = useState([]); // flights according to current view
+  const [flights, setFlights] = useState([]); // flights based on view and sortBy
+  const [sortBy, setSortBy] = useState('default');
   const [view, setView] = useState('arrivals');
 
   const filterFlights = () => {
@@ -27,7 +31,12 @@ function App() {
     }
   }
 
-  const loadFlights = () => {
+  const handleSortFlights = (sortMethod) => {
+    setSortBy((sortBy === sortMethod) ? 'default' : sortMethod);
+    setFlights(sortFlights(flights, sortMethod));
+  }
+
+  const handleLoadFlights = () => {
     fetchApiData(arrivalsTestUrl).then(data => {
       setArrivals(data);
       filterFlights();
@@ -36,7 +45,7 @@ function App() {
   }
 
   useEffect(() => {
-    loadFlights();
+    handleLoadFlights();
     console.log('App useEffect hook was triggered');
   }, []);
 
@@ -44,9 +53,9 @@ function App() {
     <div className="h-full w-full bg-gray-100">
       <NavBar />
       <div className="container mx-auto">
-        <button className="btn bg-blue-500 m-2 hover:text-white" onClick={loadFlights}>Reload Flights</button>
+        <button className="btn bg-blue-500 m-2 hover:text-white" onClick={handleLoadFlights}>Reload Flights</button>
         <h1 className="text-2xl mx-2">{view.toUpperCase()}</h1>
-        <FlightListHeader />
+        <FlightListHeader handleSortFlights={handleSortFlights} />
         <FlightList flights={flights} view={view} />
       </div>
     </div>

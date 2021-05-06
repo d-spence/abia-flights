@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 const Flight = ({ data }) => {
   return (
-    <li className="grid grid-cols-5 gap-1 bg-gray-200 border border-gray-400 rounded my-2 p-2">
+    <li className="grid grid-cols-5 gap-1 bg-gray-200 border border-gray-400 rounded my-2 p-2 hover:bg-blue-200">
       <p className="text-xl text-center">{data.airlineName}</p>
       <p className="text-center">{data.TRN}</p>
       <p className="text-center">{data.city} ({data.CTY})</p>
