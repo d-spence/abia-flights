@@ -26,7 +26,7 @@ function App() {
   const [lastUpdate, setLastUpdate] = useState({arrivals: Date.now(), departures: 0});
 
   const handleSetView = (newView) => {
-    console.log(`setting view to ${newView}`);
+    // console.log(`setting view to ${newView}`);
     if (view !== newView) {
       setView(newView);
       if (newView === 'arrivals') {
@@ -42,7 +42,7 @@ function App() {
   }
 
   const handleSortFlights = (sortMethod) => {
-    // setSortBy((sortBy === sortMethod) ? 'default' : sortMethod);
+    setSortBy((sortBy === sortMethod) ? 'default' : sortMethod);
     setFlights(sortFlights(flights, sortMethod));
   }
 
@@ -56,7 +56,7 @@ function App() {
         stateFunction(data); // sets the state (e.g. setArrivals)
         setFlights(data.flight);
         setLastUpdate({...lastUpdate, [timeStampName]: Date.now()}); // update lastUpdate
-        console.log(`API request to ${url} was successful.`);
+        console.log(`API request made to ${url}`);
       });
   }
 
@@ -76,7 +76,7 @@ function App() {
           Reload Flights
         </button>
         <FlightView view={view} handleSetView={handleSetView} />
-        <FlightSortBar handleSortFlights={handleSortFlights} />
+        <FlightSortBar sortBy={sortBy} handleSortFlights={handleSortFlights} />
         <FlightList flights={flights} view={view} />
       </div>
     </div>

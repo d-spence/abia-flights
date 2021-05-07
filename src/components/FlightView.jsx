@@ -5,16 +5,13 @@ import {
 } from 'react-icons/gi';
 
 const FlightView = ({ view, handleSetView }) => {
-  const arrivalsStyle = "view-btn btn trans-med bg-yellow-300 hover:bg-yellow-200";
-  const departuresStyle = "view-btn btn trans-med bg-green-300 hover:bg-green-200";
-  const defaultStyle = "view-btn btn trans-med text-gray-600 bg-gray-300 hover:bg-gray-200";
+  const arrivalsStyle = "text-xl w-56 btn trans-med bg-yellow-300 hover:bg-yellow-200";
+  const departuresStyle = "text-xl w-56 btn trans-med bg-green-300 hover:bg-green-200";
+  const defaultStyle = "text-xl w-56 btn trans-med text-gray-600 bg-gray-300 hover:bg-gray-200";
 
   return (
     <div className="flex w-full justify-center">
       <span className="bg-gray-400 border border-gray-400 rounded m-2">
-        {/* <div className="text-2xl mx-2">
-          {view.toUpperCase()} <ArrivalIcon className="inline" />
-        </div> */}
         <button onClick={() => handleSetView('arrivals')} className={(view === 'arrivals') ? arrivalsStyle : defaultStyle}>
           <ArrivalIcon className="inline w-auto h-10" /> ARRIVALS
         </button>
