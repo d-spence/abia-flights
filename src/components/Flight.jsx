@@ -6,7 +6,7 @@ const Flight = ({ data }) => {
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <li onClick={() => setExpanded(!expanded)} className="grid grid-cols-5 gap-1 flight">
+    <li onClick={() => setExpanded(!expanded)} className="grid grid-cols-5 gap-1 flight trans-med">
       {!expanded
         ? <>
             <p className="text-xl text-center font-bold text-blue-900">{data.airlineName}</p>
