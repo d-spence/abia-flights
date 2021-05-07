@@ -1,4 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import {
+  GiAirplaneArrival as ArrivalIcon,
+  GiAirplaneDeparture as DepartureIcon,
+} from 'react-icons/gi';
 import { 
   fetchApiData,
   sortFlights,
@@ -55,7 +59,9 @@ function App() {
       <NavBar />
       <div className="container mx-auto">
         <button className="btn bg-blue-500 m-2 hover:text-white" onClick={handleLoadFlights}>Reload Flights</button>
-        <h1 className="text-2xl mx-2">{view.toUpperCase()}</h1>
+        <div className="text-2xl mx-2">
+          {view.toUpperCase()} <ArrivalIcon className="inline" />
+        </div>
         <FlightSortBar handleSortFlights={handleSortFlights} />
         <FlightList flights={flights} view={view} />
       </div>
