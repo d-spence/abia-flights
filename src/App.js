@@ -4,7 +4,6 @@ import {
   sortFlights,
 } from './utilities';
 import {
-  apiUrl,
   arrivalsUrl,
   departuresUrl,
   arrivalsTestUrl,
@@ -24,17 +23,16 @@ function App() {
   const [sortBy, setSortBy] = useState('default');
   const [view, setView] = useState('arrivals');
 
-  const filterFlights = () => {
-    if (view === 'arrivals') {
-      setFlights(arrivals?.flight || []);
-    } else {
-      setFlights(departures?.flight || []);
-    }
-  }
-
   const handleSetView = (newView) => {
     console.log(`setting view to ${newView}`);
-    setView(newView);
+    if (view !== newView) {
+      setView(newView);
+      if (newView === 'arrivals') {
+        handleLoadFlights(arrivalsTestUrl, setArrivals);
+      } else {
+        handleLoadFlights(departuresTestUrl, setDepartures);
+      }
+    }
   }
 
   const handleSortFlights = (sortMethod) => {
@@ -42,17 +40,16 @@ function App() {
     setFlights(sortFlights(flights, sortMethod));
   }
 
-  const handleLoadFlights = () => {
-    fetchApiData(arrivalsTestUrl)
+  const handleLoadFlights = (url, stateFunction) => {
+    fetchApiData(url)
       .then(data => {
-        setArrivals(data);
+        stateFunction(data);
         setFlights(data.flight);
-      })
-    // fetchApiData(departuresTestUrl).then(data => setDepartures(data));
+      });
   }
 
   useEffect(() => {
-    handleLoadFlights();
+    handleLoadFlights(arrivalsTestUrl, setArrivals);
     console.log('App useEffect hook was triggered');
   }, []);
 
