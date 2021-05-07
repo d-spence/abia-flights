@@ -1,6 +1,6 @@
 import React from 'react'
 
-const FlightSortBar = ({ sortBy, handleSortFlights }) => {
+const FlightSortBar = ({ sortBy, handleSortFlights, view }) => {
   const activeStyle = 'btn trans-med bg-blue-300 hover:bg-blue-200';
   const defaultStyle = 'btn trans-med text-gray-700 bg-gray-300 hover:bg-gray-200';
 
@@ -26,7 +26,7 @@ const FlightSortBar = ({ sortBy, handleSortFlights }) => {
         <button 
           onClick={() => handleSortFlights('arrival')}
           className={(sortBy === 'arrival') ? activeStyle : defaultStyle}>
-          Arrival
+          {(view === 'arrivals') ? 'Arrival' : 'Departure'}
         </button>
         <button 
           onClick={() => handleSortFlights('status')}

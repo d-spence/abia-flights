@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { MdRefresh as RefreshIcon } from 'react-icons/md';
 import { 
   fetchApiData,
   sortFlights,
@@ -71,12 +72,12 @@ function App() {
       <NavBar />
       <div className="container mx-auto">
         <button 
-          className="btn bg-blue-500 m-2 hover:text-white"
+          className="flex justify-center items-center btn bg-blue-500 m-2 p-0 w-10 h-10 hover:text-white"
           onClick={() => handleLoadFlights(arrivalsTestUrl, setArrivals, view)}>
-          Reload Flights
+          <RefreshIcon className="w-8 h-auto" />
         </button>
         <FlightView view={view} handleSetView={handleSetView} />
-        <FlightSortBar sortBy={sortBy} handleSortFlights={handleSortFlights} />
+        <FlightSortBar sortBy={sortBy} handleSortFlights={handleSortFlights} view={view} />
         <FlightList flights={flights} view={view} />
       </div>
     </div>
