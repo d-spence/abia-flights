@@ -13,7 +13,7 @@ import {
 
 // import components
 import NavBar from './components/NavBar';
-import FlightListHeader from './components/FlightListHeader';
+import FlightSortBar from './components/FlightSortBar';
 import FlightList from './components/FlightList';
 
 function App() {
@@ -32,15 +32,16 @@ function App() {
   }
 
   const handleSortFlights = (sortMethod) => {
-    setSortBy((sortBy === sortMethod) ? 'default' : sortMethod);
+    // setSortBy((sortBy === sortMethod) ? 'default' : sortMethod);
     setFlights(sortFlights(flights, sortMethod));
   }
 
   const handleLoadFlights = () => {
-    fetchApiData(arrivalsTestUrl).then(data => {
-      setArrivals(data);
-      filterFlights();
-    });
+    fetchApiData(arrivalsTestUrl)
+      .then(data => {
+        setArrivals(data);
+        setFlights(data.flight);
+      })
     // fetchApiData(departuresTestUrl).then(data => setDepartures(data));
   }
 
@@ -55,7 +56,7 @@ function App() {
       <div className="container mx-auto">
         <button className="btn bg-blue-500 m-2 hover:text-white" onClick={handleLoadFlights}>Reload Flights</button>
         <h1 className="text-2xl mx-2">{view.toUpperCase()}</h1>
-        <FlightListHeader handleSortFlights={handleSortFlights} />
+        <FlightSortBar handleSortFlights={handleSortFlights} />
         <FlightList flights={flights} view={view} />
       </div>
     </div>

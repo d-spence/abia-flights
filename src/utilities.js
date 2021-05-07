@@ -10,24 +10,27 @@ const fetchApiData = (url) => {
 
 const sortFlights = (flights, sortBy) => {
   let sortedFlights = flights.slice();
-  // console.log(sortedFlights);
 
   switch(sortBy) {
     case 'airline':
-      return sortByAirline(sortedFlights);
+      return sortByString(sortedFlights, 'airlineName');
     case 'flightNum':
-      return sortByFlightNum(sortedFlights);
+      return sortByNum(sortedFlights, 'TRN');
     case 'city':
-      return sortByCity(sortedFlights);
+      return sortByString(sortedFlights, 'city');
+    case 'arrival':
+      return sortByNum(sortedFlights, 'timeInMillis');
+    case 'status':
+      return sortByString(sortedFlights, 'status');
     default:
       return sortedFlights;
   }
 }
 
-const sortByAirline = (flights) => {
+const sortByString = (flights, attribute) => {
   flights.sort((a, b) => {
-    let fa = a.airlineName.toLowerCase();
-    let fb = b.airlineName.toLowerCase();
+    let fa = a[attribute].toLowerCase();
+    let fb = b[attribute].toLowerCase();
 
     if (fa < fb) {
       return -1;
@@ -41,25 +44,8 @@ const sortByAirline = (flights) => {
   return flights;
 }
 
-const sortByFlightNum = (flights) => {
-  flights.sort((a, b) => +a.TRN - +b.TRN);
-  return flights;
-}
-
-const sortByCity = (flights) => {
-  flights.sort((a, b) => {
-    let fa = a.city.toLowerCase();
-    let fb = b.city.toLowerCase();
-
-    if (fa < fb) {
-      return -1;
-    }
-    if (fa > fb) {
-        return 1;
-    }
-    return 0;
-  });
-
+const sortByNum = (flights, attribute) => {
+  flights.sort((a, b) => +a[attribute]- +b[attribute]);
   return flights;
 }
 
