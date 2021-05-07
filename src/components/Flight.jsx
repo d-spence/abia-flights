@@ -1,14 +1,22 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import FlightExpanded from './FlightExpanded';
 
 const Flight = ({ data }) => {
+  const [expanded, setExpanded] = useState(false);
+
   return (
-    <li className="grid grid-cols-5 gap-1 bg-gray-200 border border-gray-400 rounded my-2 p-2 hover:bg-blue-200">
-      <p className="text-xl text-center">{data.airlineName}</p>
-      <p className="text-center">{data.TRN}</p>
-      <p className="text-center">{data.city} ({data.CTY})</p>
-      <p className="text-center">{data.ettFormatted}</p>
-      <p className="text-center">{data.status}</p>
+    <li onClick={() => setExpanded(!expanded)} className="grid grid-cols-5 gap-1 flight">
+      {!expanded
+        ? <>
+            <p className="text-xl text-center font-bold text-blue-900">{data.airlineName}</p>
+            <p className="text-xl text-center font-bold">{data.TRN}</p>
+            <p className="text-center font-bold">{data.city} ({data.CTY})</p>
+            <p className="text-center font-bold">{data.ettFormatted}</p>
+            <p className="text-center font-bold">{data.status}</p>
+          </>
+        : <FlightExpanded data={data} />
+      }
     </li>
   )
 }
