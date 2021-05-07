@@ -15,6 +15,7 @@ import {
 // import components
 import NavBar from './components/NavBar';
 import FlightView from './components/FlightView';
+import FlightSearchBar from './components/FlightSearchBar';
 import FlightSortBar from './components/FlightSortBar';
 import FlightList from './components/FlightList';
 
@@ -71,11 +72,14 @@ function App() {
     <div className="h-screen w-full bg-gray-100">
       <NavBar />
       <div className="container overflow mx-auto">
-        <button 
-          className="flex justify-center items-center btn bg-blue-500 m-2 p-0 w-10 h-10 hover:text-white"
-          onClick={() => handleLoadFlights(arrivalsTestUrl, setArrivals, view)}>
-          <RefreshIcon className="w-8 h-auto" />
-        </button>
+        <div className="flex w-full justify-between">
+          <FlightSearchBar />
+          <button
+            className="flex justify-center items-center btn bg-blue-500 m-2 p-0 w-10 h-10 hover:text-white"
+            onClick={() => handleLoadFlights(arrivalsTestUrl, setArrivals, view)}>
+            <RefreshIcon className="w-8 h-auto" />
+          </button>
+        </div>
         <FlightView view={view} handleSetView={handleSetView} />
         <FlightSortBar sortBy={sortBy} handleSortFlights={handleSortFlights} view={view} />
         <FlightList flights={flights} view={view} />

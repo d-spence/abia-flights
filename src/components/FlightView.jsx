@@ -11,7 +11,7 @@ const FlightView = ({ view, handleSetView }) => {
 
   return (
     <div className="flex w-full justify-center">
-      <span className="bg-gray-400 border border-gray-400 rounded m-0">
+      <span className="bg-gray-400 border border-gray-400 rounded shadow-md m-0">
         <button onClick={() => handleSetView('arrivals')} className={(view === 'arrivals') ? arrivalsStyle : defaultStyle}>
           <ArrivalIcon className="inline w-auto h-10" /> ARRIVALS
         </button>
