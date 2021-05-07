@@ -2,19 +2,23 @@
 @tailwind components;
 
 .btn {
-  @apply font-bold py-2 px-4 rounded;
+  @apply py-2 px-4 rounded;
 }
 
 .sort-btn {
-  @apply bg-gray-300 border border-gray-400 hover:bg-blue-200 transition ease-in-out duration-500;
+  @apply font-bold bg-gray-300 border border-gray-500 hover:bg-blue-200;
+}
+
+.view-btn {
+  @apply text-xl font-bold border border-gray-500 w-56;
 }
 
 .flight {
-  @apply bg-gray-200 border border-gray-400 rounded my-2 p-2 hover:bg-blue-200 transition ease-in-out duration-500;
+  @apply bg-gray-200 border border-gray-400 rounded my-2 p-2 hover:bg-blue-200;
 }
 
-.med-transition {
-  @apply transition ease-out duration-500;
+.trans-med {
+  @apply transition ease-in-out duration-500;
 }
 
 @tailwind utilities;

@@ -6,7 +6,7 @@ import Flight from './Flight';
 
 const FlightList = ({ flights, view }) => {
   return (
-    <div className="p-2">
+    <div className="m-2">
       <ul>
         {flights.map(flight => {
           return <Flight

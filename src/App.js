@@ -1,8 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import {
-  GiAirplaneArrival as ArrivalIcon,
-  GiAirplaneDeparture as DepartureIcon,
-} from 'react-icons/gi';
 import { 
   fetchApiData,
   sortFlights,
@@ -17,6 +13,7 @@ import {
 
 // import components
 import NavBar from './components/NavBar';
+import FlightView from './components/FlightView';
 import FlightSortBar from './components/FlightSortBar';
 import FlightList from './components/FlightList';
 
@@ -33,6 +30,11 @@ function App() {
     } else {
       setFlights(departures?.flight || []);
     }
+  }
+
+  const handleSetView = (newView) => {
+    console.log(`setting view to ${newView}`);
+    setView(newView);
   }
 
   const handleSortFlights = (sortMethod) => {
@@ -59,9 +61,7 @@ function App() {
       <NavBar />
       <div className="container mx-auto">
         <button className="btn bg-blue-500 m-2 hover:text-white" onClick={handleLoadFlights}>Reload Flights</button>
-        <div className="text-2xl mx-2">
-          {view.toUpperCase()} <ArrivalIcon className="inline" />
-        </div>
+        <FlightView view={view} handleSetView={handleSetView} />
         <FlightSortBar handleSortFlights={handleSortFlights} />
         <FlightList flights={flights} view={view} />
       </div>
