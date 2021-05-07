@@ -1,12 +1,12 @@
 import React from 'react'
 
 const FlightSortBar = ({ sortBy, handleSortFlights, view }) => {
-  const activeStyle = 'btn trans-med bg-blue-300 hover:bg-blue-200';
-  const defaultStyle = 'btn trans-med text-gray-700 bg-gray-300 hover:bg-gray-200';
+  const activeStyle = 'btn-responsive trans-med bg-blue-300 hover:bg-blue-200';
+  const defaultStyle = 'btn-responsive trans-med text-gray-700 bg-gray-300 hover:bg-gray-200';
 
   return (
     <div className="my-4 mx-2">
-      <span className="text-lg font-bold bg-gray-200 border border-gray-500 rounded-t px-4 py-1">Sort By</span>
+      <span className="md:text-lg font-bold bg-gray-200 border border-gray-500 rounded-t px-4 py-1">Sort By</span>
       <div className="grid grid-cols-5 bg-gray-500 rounded">
         <button 
           onClick={() => handleSortFlights('airline')}

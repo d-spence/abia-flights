@@ -68,9 +68,9 @@ function App() {
   }, []);
 
   return (
-    <div className="h-full w-full bg-gray-100">
+    <div className="h-screen w-full bg-gray-100">
       <NavBar />
-      <div className="container mx-auto">
+      <div className="container overflow mx-auto">
         <button 
           className="flex justify-center items-center btn bg-blue-500 m-2 p-0 w-10 h-10 hover:text-white"
           onClick={() => handleLoadFlights(arrivalsTestUrl, setArrivals, view)}>

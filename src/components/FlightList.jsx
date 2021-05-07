@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 // components
 import Flight from './Flight';
 
-const FlightList = ({ flights, view }) => {
+const FlightList = ({ flights }) => {
   return (
-    <div className="m-2">
+    <div className="m-2 mb-10">
       <ul>
         {flights.map(flight => {
           return <Flight

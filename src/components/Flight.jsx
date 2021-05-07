@@ -9,11 +9,11 @@ const Flight = ({ data }) => {
     <li onClick={() => setExpanded(!expanded)} className="grid grid-cols-5 gap-1 flight trans-med">
       {!expanded
         ? <>
-            <p className="text-xl text-center font-bold text-blue-900">{data.airlineName}</p>
-            <p className="text-xl text-center font-bold">{data.TRN}</p>
-            <p className="text-center font-bold">{data.city} ({data.CTY})</p>
-            <p className="text-center font-bold">{data.ettFormatted}</p>
-            <p className="text-center font-bold">{data.status}</p>
+            <p className="md:text-xl text-center font-bold text-blue-900">{data.airlineName}</p>
+            <p className="md:text-xl text-center font-bold">{data.TRN}</p>
+            <p className="text-xs md:text-base text-center font-bold">{data.city} ({data.CTY})</p>
+            <p className="text-sm md:text-base text-center font-bold">{data.ettFormatted}</p>
+            <p className="text-sm md:text-base text-center font-bold">{data.status}</p>
           </>
         : <FlightExpanded data={data} />
       }
