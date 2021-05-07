@@ -1,4 +1,5 @@
 // Utility functions
+import { defaultRefresh } from './config';
 
 const fetchApiData = (url) => {
   // Request data from API returned as a promise
@@ -49,7 +50,14 @@ const sortByNum = (flights, attribute) => {
   return flights;
 }
 
+const updateRequired = (timeStamp, threshhold=defaultRefresh) => {
+  // Returns true if timestamp comparison is over threshhold; else false
+  let newTimeStamp = Date.now();
+  return (newTimeStamp - timeStamp > threshhold) ? true : false;
+}
+
 export {
   fetchApiData,
   sortFlights,
+  updateRequired,
 }

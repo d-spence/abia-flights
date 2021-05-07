@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { 
   fetchApiData,
   sortFlights,
+  updateRequired,
 } from './utilities';
 import {
   arrivalsUrl,
@@ -22,15 +23,20 @@ function App() {
   const [flights, setFlights] = useState([]); // flights based on view and sortBy
   const [sortBy, setSortBy] = useState('default');
   const [view, setView] = useState('arrivals');
+  const [lastUpdate, setLastUpdate] = useState({arrivals: Date.now(), departures: 0});
 
   const handleSetView = (newView) => {
     console.log(`setting view to ${newView}`);
     if (view !== newView) {
       setView(newView);
       if (newView === 'arrivals') {
-        handleLoadFlights(arrivalsTestUrl, setArrivals);
+        updateRequired(lastUpdate.arrivals)
+          ? handleLoadFlights(arrivalsTestUrl, setArrivals, 'arrivals')
+          : setFlights(arrivals.flight);
       } else {
-        handleLoadFlights(departuresTestUrl, setDepartures);
+        updateRequired(lastUpdate.departures)
+          ? handleLoadFlights(departuresTestUrl, setDepartures, 'departures')
+          : setFlights(departures.flight);
       }
     }
   }
@@ -40,16 +46,23 @@ function App() {
     setFlights(sortFlights(flights, sortMethod));
   }
 
-  const handleLoadFlights = (url, stateFunction) => {
+  const handleLoadFlights = (url, stateFunction, timeStampName='other') => {
+    // Call the fetchApiData utility function using the param url
+    // stateFunction is the setState function for the state item you want to update
+    // timeStampName should be provided as either 'arrivals' or 'departures'
+
     fetchApiData(url)
       .then(data => {
-        stateFunction(data);
+        stateFunction(data); // sets the state (e.g. setArrivals)
         setFlights(data.flight);
+        setLastUpdate({...lastUpdate, [timeStampName]: Date.now()}); // update lastUpdate
+        console.log(`API request to ${url} was successful.`);
       });
   }
 
   useEffect(() => {
-    handleLoadFlights(arrivalsTestUrl, setArrivals);
+    // Run this on app startup
+    handleLoadFlights(arrivalsTestUrl, setArrivals, 'arrivals');
     console.log('App useEffect hook was triggered');
   }, []);
 
@@ -57,7 +70,11 @@ function App() {
     <div className="h-full w-full bg-gray-100">
       <NavBar />
       <div className="container mx-auto">
-        <button className="btn bg-blue-500 m-2 hover:text-white" onClick={handleLoadFlights}>Reload Flights</button>
+        <button 
+          className="btn bg-blue-500 m-2 hover:text-white"
+          onClick={() => handleLoadFlights(arrivalsTestUrl, setArrivals, view)}>
+          Reload Flights
+        </button>
         <FlightView view={view} handleSetView={handleSetView} />
         <FlightSortBar handleSortFlights={handleSortFlights} />
         <FlightList flights={flights} view={view} />
