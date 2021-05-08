@@ -56,8 +56,24 @@ const updateRequired = (timeStamp, threshhold=defaultRefresh) => {
   return (newTimeStamp - timeStamp > threshhold) ? true : false;
 }
 
+const filterFlights = (flights, text) => {
+  // Returns a filtered list of flights who's attribute values match text
+  const attributes = ['airlineName', 'flightNumber', 'city'];
+
+  return flights.filter(flight => {
+    // true if any of the flight's attributes include the text
+    if (attributes.some(attr => (
+      flight[attr].toLowerCase().includes(text.toLowerCase())
+    ) ? true : false)) {
+      return true;
+    }
+    return false;
+  });
+}
+
 export {
   fetchApiData,
   sortFlights,
   updateRequired,
+  filterFlights,
 }

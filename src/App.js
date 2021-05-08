@@ -4,6 +4,7 @@ import {
   fetchApiData,
   sortFlights,
   updateRequired,
+  filterFlights,
 } from './utilities';
 import {
   arrivalsUrl,
@@ -23,12 +24,13 @@ function App() {
   const [arrivals, setArrivals] = useState(null);
   const [departures, setDepartures] = useState(null);
   const [flights, setFlights] = useState([]); // flights based on view and sortBy
+  const [filteredFlights, setFilteredFlights] = useState([]);
+  const [searchText, setSearchText] = useState('');
   const [sortBy, setSortBy] = useState('default');
   const [view, setView] = useState('arrivals');
   const [lastUpdate, setLastUpdate] = useState({arrivals: Date.now(), departures: 0});
 
   const handleSetView = (newView) => {
-    // console.log(`setting view to ${newView}`);
     if (view !== newView) {
       setView(newView);
       if (newView === 'arrivals') {
@@ -43,9 +45,14 @@ function App() {
     }
   }
 
+  const handleSearch = (text) => {
+    setSearchText(text);
+    setFilteredFlights(filterFlights(flights, text));
+  }
+
   const handleSortFlights = (sortMethod) => {
     setSortBy((sortBy === sortMethod) ? 'default' : sortMethod);
-    setFlights(sortFlights(flights, sortMethod));
+    setFilteredFlights(sortFlights(filteredFlights, sortMethod));
   }
 
   const handleLoadFlights = (url, stateFunction, timeStampName='other') => {
@@ -57,6 +64,7 @@ function App() {
       .then(data => {
         stateFunction(data); // sets the state (e.g. setArrivals)
         setFlights(data.flight);
+        setFilteredFlights(data.flight);
         setLastUpdate({...lastUpdate, [timeStampName]: Date.now()}); // update lastUpdate
         console.log(`API request made to ${url}`);
       });
@@ -73,7 +81,7 @@ function App() {
       <NavBar />
       <div className="container overflow mx-auto">
         <div className="flex w-full justify-between">
-          <FlightSearchBar />
+          <FlightSearchBar searchText={searchText} handleSearch={handleSearch} />
           <button
             className="flex justify-center items-center btn bg-blue-500 m-2 p-0 w-10 h-10 hover:text-white"
             onClick={() => handleLoadFlights(arrivalsTestUrl, setArrivals, view)}>
@@ -82,7 +90,7 @@ function App() {
         </div>
         <FlightView view={view} handleSetView={handleSetView} />
         <FlightSortBar sortBy={sortBy} handleSortFlights={handleSortFlights} view={view} />
-        <FlightList flights={flights} view={view} />
+        <FlightList flights={filteredFlights} view={view} />
       </div>
     </div>
   );

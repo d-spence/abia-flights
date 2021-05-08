@@ -24,7 +24,6 @@ const FlightExpanded = ({ data }) => {
         <p className="text-sm md:text-base text-center font-bold">{data.status}</p>
         <p className="text-xs md:text-base text-center text-gray-800">Gate: {data.gate}</p>
         <p className="text-xs md:text-base text-center text-gray-800">{(data.bags === " ") ? "" : `Bags: ${data.bags}`}</p>
-        {console.log(data.bags === " ")}
       </div>
     </>
   )
