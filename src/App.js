@@ -71,7 +71,7 @@ function App() {
   }, []);
 
   return (
-    <div className="h-screen w-full bg-gray-100">
+    <div>
       <NavBar />
       <div className="container overflow mx-auto">
         <div className="flex w-full justify-between">
