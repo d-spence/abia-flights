@@ -1,13 +1,20 @@
 import React from 'react';
+import { IoCloseCircle as CloseIcon } from 'react-icons/io5';
 
-const FlightSearchBar = ({ handleSearch }) => {
+const FlightSearchBar = ({ searchText, handleSearch }) => {
   return (
-    <span>
+    <span className="bg-gray-400 border border-gray-500 rounded shadow-md m-2" >
       <input
+        type="text"
+        value={searchText}
         onChange={e => handleSearch(e.target.value)}
-        placeholder='Search Flights'
-        className="text-center bg-gray-100 border border-gray-400 rounded trans-med shadow-md p-2 m-2 focus:ring-2 focus:ring-blue-500 focus:bg-white">
-      </input>
+        placeholder="Search Flights"
+        className="text-center bg-gray-100 p-2 rounded ring-inset focus:ring-2 focus:ring-blue-300 focus:bg-white outline-none"
+      />
+      <CloseIcon
+        onClick={() => handleSearch('')}
+        className="inline text-gray-100 trans-med hover:text-red-500 h-6 w-6 m-0.5"
+      />
     </span>
   )
 }
