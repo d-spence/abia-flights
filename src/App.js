@@ -21,9 +21,7 @@ import FlightSortBar from './components/FlightSortBar';
 import FlightList from './components/FlightList';
 
 function App() {
-  const [arrivals, setArrivals] = useState(null);
-  const [departures, setDepartures] = useState(null);
-  const [flights, setFlights] = useState([]); // flights based on view and sortBy
+  const [flights, setFlights] = useState({arrivals: [], departures: []});
   const [filteredFlights, setFilteredFlights] = useState([]);
   const [searchText, setSearchText] = useState('');
   const [sortBy, setSortBy] = useState('default');
@@ -33,21 +31,19 @@ function App() {
   const handleSetView = (newView) => {
     if (view !== newView) {
       setView(newView);
-      if (newView === 'arrivals') {
-        updateRequired(lastUpdate.arrivals)
-          ? handleLoadFlights(arrivalsTestUrl, setArrivals, 'arrivals')
-          : setFlights(arrivals.flight);
-      } else {
-        updateRequired(lastUpdate.departures)
-          ? handleLoadFlights(departuresTestUrl, setDepartures, 'departures')
-          : setFlights(departures.flight);
+      if (newView === 'arrivals' && updateRequired(lastUpdate.arrivals)) {
+        handleLoadFlights(arrivalsTestUrl, 'arrivals');
+      } else if (updateRequired(lastUpdate.departures)) {
+        handleLoadFlights(departuresTestUrl, 'departures');
       }
+
+      setFilteredFlights(flights[newView]);
     }
   }
 
   const handleSearch = (text) => {
     setSearchText(text);
-    setFilteredFlights(filterFlights(flights, text));
+    setFilteredFlights(filterFlights(flights[view], text));
   }
 
   const handleSortFlights = (sortMethod) => {
@@ -55,24 +51,22 @@ function App() {
     setFilteredFlights(sortFlights(filteredFlights, sortMethod));
   }
 
-  const handleLoadFlights = (url, stateFunction, timeStampName='other') => {
+  const handleLoadFlights = (url, category='none') => {
     // Call the fetchApiData utility function using the param url
-    // stateFunction is the setState function for the state item you want to update
-    // timeStampName should be provided as either 'arrivals' or 'departures'
+    // category should be provided as either 'arrivals' or 'departures'
 
     fetchApiData(url)
       .then(data => {
-        stateFunction(data); // sets the state (e.g. setArrivals)
-        setFlights(data.flight);
-        setFilteredFlights(data.flight);
-        setLastUpdate({...lastUpdate, [timeStampName]: Date.now()}); // update lastUpdate
+        setFlights({...flights, [category]: data});
+        setFilteredFlights(data);
+        setLastUpdate({...lastUpdate, [category]: Date.now()}); // update lastUpdate
         console.log(`API request made to ${url}`);
       });
   }
 
   useEffect(() => {
     // Run this on app startup
-    handleLoadFlights(arrivalsTestUrl, setArrivals, 'arrivals');
+    handleLoadFlights(arrivalsTestUrl, 'arrivals');
     console.log('App useEffect hook was triggered');
   }, []);
 
@@ -84,7 +78,7 @@ function App() {
           <FlightSearchBar searchText={searchText} handleSearch={handleSearch} />
           <button
             className="flex justify-center items-center btn bg-blue-500 m-2 p-0 w-10 h-10 hover:text-white"
-            onClick={() => handleLoadFlights(arrivalsTestUrl, setArrivals, view)}>
+            onClick={() => handleLoadFlights(arrivalsTestUrl, view)}>
             <RefreshIcon className="w-8 h-auto" />
           </button>
         </div>
