@@ -13,6 +13,10 @@ body {
   @apply font-bold text-sm py-0.5 px-0.5 md:text-base md:py-2 md:px-4 border border-gray-500 rounded;
 }
 
+.btn-view {
+  @apply w-1/2 text-sm text-center font-bold border border-gray-500 py-2 px-1 rounded md:text-xl md:w-56;
+}
+
 .trans-med {
   @apply transition ease-in-out duration-500;
 }

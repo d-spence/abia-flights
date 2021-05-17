@@ -5,19 +5,23 @@ import {
 } from 'react-icons/gi';
 
 const FlightView = ({ view, handleSetView }) => {
-  const arrivalsStyle = "md:text-xl md:w-56 btn trans-med bg-yellow-300 hover:bg-yellow-200";
-  const departuresStyle = "md:text-xl md:w-56 btn trans-med bg-green-300 hover:bg-green-200";
-  const defaultStyle = "md:text-xl md:w-56 btn trans-med text-gray-600 bg-gray-300 hover:bg-gray-200";
+  const arrivalsStyle = "bg-yellow-300 hover:bg-yellow-200";
+  const departuresStyle = "bg-green-300 hover:bg-green-200";
+  const defaultStyle = "text-gray-600 bg-gray-300 hover:bg-gray-200";
 
   return (
     <div className="flex w-full justify-center">
-      <span className="bg-gray-500 rounded shadow-md m-0">
-        <button onClick={() => handleSetView('arrivals')} className={(view === 'arrivals') ? arrivalsStyle : defaultStyle}>
-          <ArrivalIcon className="inline w-auto h-10" /> ARRIVALS
-        </button>
-        <button onClick={() => handleSetView('departures')} className={(view === 'departures') ? departuresStyle : defaultStyle}>
-          DEPARTURES <DepartureIcon className="inline w-auto h-10" />
-        </button>
+      <span className="flex flex-row bg-gray-500 w-full md:w-auto rounded shadow-md m-2">
+        <div
+          onClick={() => handleSetView('arrivals')}
+          className={`btn-view trans-med ${(view === 'arrivals') ? arrivalsStyle : defaultStyle}`}>
+          <ArrivalIcon className="inline w-auto h-7 md:h-10" /> ARRIVALS
+        </div>
+        <div
+          onClick={() => handleSetView('departures')}
+          className={`btn-view trans-med ${(view === 'departures') ? departuresStyle : defaultStyle}`}>
+          DEPARTURES <DepartureIcon className="inline w-auto h-7 md:h-10" />
+        </div>
       </span>
     </div>
   )
