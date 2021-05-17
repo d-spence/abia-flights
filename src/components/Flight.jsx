@@ -23,7 +23,7 @@ const Flight = ({ data }) => {
       }
       <div
         onClick={() => setExpanded(!expanded)}
-        className="flex justify-center col-span-full rounded-b hover:bg-blue-200 trans-med">
+        className="flex justify-center col-span-full border-t border-gray-300 rounded-b hover:bg-blue-200 trans-med">
         {!expanded
           ? <MdExpandMore className="text-blue-500 h-6 w-auto -m-1" />
           : <MdExpandLess className="text-blue-900 h-6 w-auto -m-1" />
