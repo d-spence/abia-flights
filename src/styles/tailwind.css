@@ -13,10 +13,6 @@ body {
   @apply font-bold text-sm py-0.5 px-0.5 md:text-base md:py-2 md:px-4 border border-gray-500 rounded;
 }
 
-.flight {
-  @apply bg-gray-200 border border-gray-400 rounded my-2 p-2 hover:bg-blue-200;
-}
-
 .trans-med {
   @apply transition ease-in-out duration-500;
 }
