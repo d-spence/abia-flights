@@ -19,6 +19,7 @@ import FlightView from './components/FlightView';
 import FlightSearchBar from './components/FlightSearchBar';
 import FlightSortBar from './components/FlightSortBar';
 import FlightList from './components/FlightList';
+import Footer from './components/Footer';
 
 function App() {
   const [flights, setFlights] = useState({arrivals: [], departures: []});
@@ -71,7 +72,7 @@ function App() {
   }, []);
 
   return (
-    <div>
+    <div className="flex flex-col h-screen justify-between">
       <NavBar />
       <div className="container overflow mx-auto">
         <div className="flex w-full justify-between">
@@ -86,6 +87,7 @@ function App() {
         <FlightSortBar sortBy={sortBy} handleSortFlights={handleSortFlights} view={view} />
         <FlightList flights={filteredFlights} view={view} />
       </div>
+      <Footer />
     </div>
   );
 }
