@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
-// components
 import Flight from './Flight';
 
 const FlightList = ({ flights }) => {

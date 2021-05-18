@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { MdRefresh as RefreshIcon } from 'react-icons/md';
 import { 
   fetchApiData,
   sortFlights,
   updateRequired,
-  filterFlights,
+  searchFlights,
 } from './utilities';
 import {
   arrivalsUrl,
@@ -18,6 +17,7 @@ import NavBar from './components/NavBar';
 import ScrollTop from './components/ScrollTop';
 import FlightView from './components/FlightView';
 import FlightSearchBar from './components/FlightSearchBar';
+import RefreshBtn from './components/RefreshBtn';
 import FlightSortBar from './components/FlightSortBar';
 import FlightList from './components/FlightList';
 import Footer from './components/Footer';
@@ -45,7 +45,7 @@ function App() {
 
   const handleSearch = (text) => {
     setSearchText(text);
-    setFilteredFlights(filterFlights(flights[view], text));
+    setFilteredFlights(searchFlights(flights[view], text));
   }
 
   const handleSortFlights = (sortMethod) => {
@@ -78,11 +78,7 @@ function App() {
       <div className="container overflow mx-auto">
         <div className="flex w-full justify-between">
           <FlightSearchBar searchText={searchText} handleSearch={handleSearch} />
-          <button
-            className="flex justify-center items-center btn bg-blue-500 m-2 p-0 w-10 h-10 hover:text-white"
-            onClick={() => handleLoadFlights(arrivalsTestUrl, view)}>
-            <RefreshIcon className="w-8 h-auto" />
-          </button>
+          <RefreshBtn handleLoadFlights={handleLoadFlights} view={view} lastUpdate={lastUpdate} />
         </div>
         <FlightView view={view} handleSetView={handleSetView} />
         <FlightSortBar sortBy={sortBy} handleSortFlights={handleSortFlights} view={view} />

@@ -9,7 +9,7 @@ const FlightSearchBar = ({ searchText, handleSearch }) => {
         value={searchText}
         onChange={e => handleSearch(e.target.value)}
         placeholder="Search Flights"
-        className="w-44 md:w-auto text-center bg-gray-100 p-2 rounded ring-inset focus:ring-2 focus:ring-blue-300 focus:bg-white outline-none"
+        className="w-36 md:w-auto text-center bg-gray-100 p-2 rounded ring-inset focus:ring-2 focus:ring-blue-300 focus:bg-white outline-none"
       />
       <CloseIcon
         onClick={() => handleSearch('')}

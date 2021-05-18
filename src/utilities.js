@@ -1,4 +1,4 @@
-// Utility functions
+import dayjs from 'dayjs';
 import { defaultRefresh } from './config';
 
 const fetchApiData = (url) => {
@@ -56,7 +56,7 @@ const updateRequired = (timeStamp, threshhold=defaultRefresh) => {
   return (newTimeStamp - timeStamp > threshhold) ? true : false;
 }
 
-const filterFlights = (flights, text) => {
+const searchFlights = (flights, text) => {
   // Returns a filtered list of flights who's attribute values match text
   const attributes = ['airlineName', 'flightNumber', 'city'];
 
@@ -71,9 +71,17 @@ const filterFlights = (flights, text) => {
   });
 }
 
+const getDateString = (ts) => {
+  // Return date string from timestamp as HH:MM:SS
+  const d = dayjs(ts);
+  const formatted = d.format('hh:mm:ss A');
+  return formatted;
+} 
+
 export {
   fetchApiData,
   sortFlights,
   updateRequired,
-  filterFlights,
+  searchFlights,
+  getDateString,
 }
