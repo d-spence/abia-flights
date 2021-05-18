@@ -15,6 +15,7 @@ import {
 
 // import components
 import NavBar from './components/NavBar';
+import ScrollTop from './components/ScrollTop';
 import FlightView from './components/FlightView';
 import FlightSearchBar from './components/FlightSearchBar';
 import FlightSortBar from './components/FlightSortBar';
@@ -55,7 +56,6 @@ function App() {
   const handleLoadFlights = (url, category='none') => {
     // Call the fetchApiData utility function using the param url
     // category should be provided as either 'arrivals' or 'departures'
-
     fetchApiData(url)
       .then(data => {
         setFlights({...flights, [category]: data || []});
@@ -74,6 +74,7 @@ function App() {
   return (
     <div className="flex flex-col h-screen justify-between">
       <NavBar />
+      <ScrollTop />
       <div className="container overflow mx-auto">
         <div className="flex w-full justify-between">
           <FlightSearchBar searchText={searchText} handleSearch={handleSearch} />
