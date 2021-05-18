@@ -58,9 +58,9 @@ function App() {
 
     fetchApiData(url)
       .then(data => {
-        setFlights({...flights, [category]: data});
-        setFilteredFlights(data);
-        setLastUpdate({...lastUpdate, [category]: Date.now()}); // update lastUpdate
+        setFlights({...flights, [category]: data || []});
+        setFilteredFlights(data || []);
+        setLastUpdate({...lastUpdate, [category]: Date.now()});
         console.log(`API request made to ${url}`);
       });
   }
