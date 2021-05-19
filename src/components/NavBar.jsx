@@ -9,7 +9,7 @@ const NavBar = () => {
         <img className="h-20 w-auto mr-4" src={abiaLogo} alt="" />
         <div>
           <div className="text-blue-900 text-2xl md:text-4xl font-extrabold">
-            ABIA Flight Monitor
+            Austin Flights
           </div>
           <p className="text-yellow-200 font-bold">
             Unofficial Austin-Bergstrom International Airport flight monitor

@@ -11,12 +11,13 @@
     "react-dom": "^17.0.2",
     "react-icons": "^4.2.0",
     "react-scripts": "4.0.3",
+    "serve": "^11.3.2",
     "web-vitals": "^1.1.1"
   },
   "scripts": {
-    "start": "npm run build:css && react-scripts start",
-    "build": "NODE_ENV=production npm run build:css && react-scripts build",
-    "test": "react-scripts test",
+    "dev": "npm run build:css && react-scripts start",
+    "start": "serve -s build",
+    "build": "NODE_ENV=production && npm run build:css && react-scripts build",
     "eject": "react-scripts eject",
     "build:css": "postcss src/styles/tailwind.css -o src/styles/tailwind.generated.css",
     "watch:css": "postcss src/styles/tailwind.css -o src/styles/tailwind.generated.css --watch"
