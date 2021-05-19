@@ -28,8 +28,8 @@ function App() {
   const [sortBy, setSortBy] = useState('default');
   const [view, setView] = useState('arrivals');
   const [lastUpdate, setLastUpdate] = useState({arrivals: 0, departures: 0});
-  const [autoRefresh, setAutoRefresh] = useState(true);
   const refreshTimer = useRef(null);
+  const autoRefresh = true;
 
   const handleSearch = (text) => {
     setSearchText(text);
@@ -41,13 +41,18 @@ function App() {
     setFilteredFlights(sortFlights(filteredFlights, sortMethod));
   }
 
+  const handleSearchAndSort = () => {
+    // Provides a shortcut to search and sort flights list
+    let searchFiltered = searchFlights(flights[view], searchText);
+    setFilteredFlights(sortFlights(searchFiltered, sortBy));
+  }
+
   const handleLoadFlights = (url, category='none') => {
     // Call the fetchApiData utility function using the param url
     // category should be provided as either 'arrivals' or 'departures'
     fetchApiData(url)
       .then(data => {
         setFlights({...flights, [category]: data || []});
-        setFilteredFlights(data || []);
         setLastUpdate({...lastUpdate, [category]: Date.now()});
       });
   }
@@ -60,7 +65,7 @@ function App() {
       console.log(`Auto-loading '${view}' from ${refreshUrl}`);
       handleLoadFlights(refreshUrl, view);
     } else {
-      setFilteredFlights(flights[view]);
+      handleSearchAndSort();
     }
 
     refreshTimer.current = setTimeout(() => {
@@ -69,10 +74,14 @@ function App() {
   }
 
   useEffect(() => {
+    handleSearchAndSort();
+  }, [flights]);
+
+  useEffect(() => {
     // Run this on app startup and everytime view changes
     clearTimeout(refreshTimer.current);
-    (autoRefresh) ? handleAutoRefresh() : setFilteredFlights(flights[view]);
-  }, [view, setView]);
+    (autoRefresh) ? handleAutoRefresh() : handleSearchAndSort();
+  }, [view]);
 
   return (
     <div className="flex flex-col h-screen justify-between">

@@ -11,7 +11,7 @@ const FlightView = ({ view, setView }) => {
 
   return (
     <div className="flex w-full justify-center">
-      <span className="flex flex-row bg-gray-500 w-full md:w-auto rounded shadow-md m-2">
+      <span className="flex flex-row bg-gray-500 w-full md:w-auto rounded shadow-md m-2 cursor-pointer">
         <div
           onClick={() => (view !== 'arrivals') && setView('arrivals')}
           className={`btn-view trans-med ${(view === 'arrivals') ? arrivalsStyle : defaultStyle}`}>

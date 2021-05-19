@@ -10,21 +10,21 @@ const fetchApiData = (url) => {
 }
 
 const sortFlights = (flights, sortBy) => {
-  let sortedFlights = flights.slice();
+  // let sortedFlights = flights.slice();
 
   switch(sortBy) {
     case 'airline':
-      return sortByString(sortedFlights, 'airlineName');
+      return sortByString(flights, 'airlineName');
     case 'flightNum':
-      return sortByNum(sortedFlights, 'TRN');
+      return sortByNum(flights, 'TRN');
     case 'city':
-      return sortByString(sortedFlights, 'city');
+      return sortByString(flights, 'city');
     case 'arrival':
-      return sortByNum(sortedFlights, 'timeInMillis');
+      return sortByNum(flights, 'timeInMillis');
     case 'status':
-      return sortByString(sortedFlights, 'status');
+      return sortByString(flights, 'status');
     default:
-      return sortedFlights;
+      return flights;
   }
 }
 
@@ -59,6 +59,7 @@ const updateRequired = (timeStamp, threshhold=defaultRefresh) => {
 const searchFlights = (flights, text) => {
   // Returns a filtered list of flights who's attribute values match text
   const attributes = ['airlineName', 'flightNumber', 'city'];
+  if (text === '') return flights;
 
   return flights.filter(flight => {
     // true if any of the flight's attributes include the text
