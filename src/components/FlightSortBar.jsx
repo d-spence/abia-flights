@@ -5,7 +5,7 @@ const FlightSortBar = ({ sortBy, handleSortFlights, view }) => {
   const defaultStyle = 'btn-responsive trans-med text-gray-700 bg-gray-300 hover:bg-gray-200';
 
   return (
-    <div className="my-4 mx-2">
+    <div className="my-2 mx-2">
       <span className="md:text-lg font-bold bg-gray-200 border border-gray-500 rounded-t px-4 py-1">Sort By</span>
       <div className="grid grid-cols-5 bg-gray-500 rounded">
         <button 

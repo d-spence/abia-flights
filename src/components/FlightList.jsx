@@ -5,6 +5,7 @@ import Flight from './Flight';
 const FlightList = ({ flights }) => {
   return (
     <div className="m-2 mb-10">
+      <div>Showing {flights.length} flight{flights.length !== 1 && 's'}</div>
       {(flights.length > 0)
         ?  <ul>
             {flights.map(flight => {

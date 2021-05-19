@@ -30,6 +30,7 @@ function App() {
   const [sortBy, setSortBy] = useState('default');
   const [view, setView] = useState('arrivals');
   const [lastUpdate, setLastUpdate] = useState({arrivals: 0, departures: 0});
+  const [autoRefreshEnabled, setAutoRefreshEnabled] = useState(false);
   const refreshTimer = useRef(null);
 
   const handleSearch = (text) => {
@@ -71,8 +72,7 @@ function App() {
 
   useEffect(() => {
     // Run this on app startup and everytime view changes
-    // handleAutoRefresh(); // automatic refresh
-    setFilteredFlights(flights[view]);
+    (autoRefreshEnabled) ? handleAutoRefresh() : setFilteredFlights(flights[view]);
   }, [view, setView]);
 
   return (
