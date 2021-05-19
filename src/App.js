@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   fetchApiData,
   sortFlights,
@@ -10,6 +10,7 @@ import {
   departuresUrl,
   arrivalsTestUrl,
   departuresTestUrl,
+  defaultRefresh,
 } from './config';
 
 // import components
@@ -28,18 +29,13 @@ function App() {
   const [searchText, setSearchText] = useState('');
   const [sortBy, setSortBy] = useState('default');
   const [view, setView] = useState('arrivals');
-  const [lastUpdate, setLastUpdate] = useState({arrivals: Date.now(), departures: 0});
+  const [lastUpdate, setLastUpdate] = useState({arrivals: 0, departures: 0});
+  const refreshTimer = useRef(null);
 
   const handleSetView = (newView) => {
     if (view !== newView) {
       setView(newView);
-      if (newView === 'arrivals' && updateRequired(lastUpdate.arrivals)) {
-        handleLoadFlights(arrivalsTestUrl, 'arrivals');
-      } else if (updateRequired(lastUpdate.departures)) {
-        handleLoadFlights(departuresTestUrl, 'departures');
-      }
-
-      setFilteredFlights(flights[newView]);
+      // setFilteredFlights(flights[newView]);
     }
   }
 
@@ -61,15 +57,29 @@ function App() {
         setFlights({...flights, [category]: data || []});
         setFilteredFlights(data || []);
         setLastUpdate({...lastUpdate, [category]: Date.now()});
-        console.log(`API request made to ${url}`);
       });
   }
 
+  const handleAutoRefresh = () => {
+    clearTimeout(refreshTimer.current);
+    const refreshUrl = (view === 'arrivals') ? arrivalsTestUrl : departuresTestUrl;
+    
+    if (updateRequired(lastUpdate[view])) {
+      console.log(`Auto-loading '${view}' from ${refreshUrl}`);
+      handleLoadFlights(refreshUrl, view);
+    } else {
+      setFilteredFlights(flights[view]);
+    }
+
+    refreshTimer.current = setTimeout(() => {
+      handleAutoRefresh();
+    }, defaultRefresh);
+  }
+
   useEffect(() => {
-    // Run this on app startup
-    handleLoadFlights(arrivalsTestUrl, 'arrivals');
-    console.log('App useEffect hook was triggered');
-  }, []);
+    // Run this on app startup and everytime view changes
+    handleAutoRefresh(); // automatic refresh
+  }, [view, setView]);
 
   return (
     <div className="flex flex-col h-screen justify-between">
@@ -80,7 +90,7 @@ function App() {
           <FlightSearchBar searchText={searchText} handleSearch={handleSearch} />
           <RefreshBtn handleLoadFlights={handleLoadFlights} view={view} lastUpdate={lastUpdate} />
         </div>
-        <FlightView view={view} handleSetView={handleSetView} />
+        <FlightView view={view} setView={setView} />
         <FlightSortBar sortBy={sortBy} handleSortFlights={handleSortFlights} view={view} />
         <FlightList flights={filteredFlights} view={view} />
       </div>
