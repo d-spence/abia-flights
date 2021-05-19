@@ -17,7 +17,7 @@ const RefreshBtn = ({ handleLoadFlights, view, lastUpdate }) => {
 
   const handleRefreshFlights = () => {
     if ((Date.now() - lastUpdate[view]) > minRefreshTime) {
-      const refreshUrl = (view === 'arrivals') ? arrivalsTestUrl : departuresTestUrl;
+      const refreshUrl = (view === 'arrivals') ? arrivalsUrl : departuresUrl;
       handleLoadFlights(refreshUrl, view);
     }
     

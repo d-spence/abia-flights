@@ -32,13 +32,6 @@ function App() {
   const [lastUpdate, setLastUpdate] = useState({arrivals: 0, departures: 0});
   const refreshTimer = useRef(null);
 
-  const handleSetView = (newView) => {
-    if (view !== newView) {
-      setView(newView);
-      // setFilteredFlights(flights[newView]);
-    }
-  }
-
   const handleSearch = (text) => {
     setSearchText(text);
     setFilteredFlights(searchFlights(flights[view], text));
@@ -62,7 +55,7 @@ function App() {
 
   const handleAutoRefresh = () => {
     clearTimeout(refreshTimer.current);
-    const refreshUrl = (view === 'arrivals') ? arrivalsTestUrl : departuresTestUrl;
+    const refreshUrl = (view === 'arrivals') ? arrivalsUrl : departuresUrl;
     
     if (updateRequired(lastUpdate[view])) {
       console.log(`Auto-loading '${view}' from ${refreshUrl}`);
@@ -78,7 +71,8 @@ function App() {
 
   useEffect(() => {
     // Run this on app startup and everytime view changes
-    handleAutoRefresh(); // automatic refresh
+    // handleAutoRefresh(); // automatic refresh
+    setFilteredFlights(flights[view]);
   }, [view, setView]);
 
   return (
