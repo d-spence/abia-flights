@@ -8,8 +8,6 @@ import {
 import {
   arrivalsUrl,
   departuresUrl,
-  arrivalsTestUrl,
-  departuresTestUrl,
   defaultRefresh,
 } from './config';
 
@@ -30,7 +28,7 @@ function App() {
   const [sortBy, setSortBy] = useState('default');
   const [view, setView] = useState('arrivals');
   const [lastUpdate, setLastUpdate] = useState({arrivals: 0, departures: 0});
-  const [autoRefreshEnabled, setAutoRefreshEnabled] = useState(false);
+  const [autoRefresh, setAutoRefresh] = useState(true);
   const refreshTimer = useRef(null);
 
   const handleSearch = (text) => {
@@ -72,7 +70,8 @@ function App() {
 
   useEffect(() => {
     // Run this on app startup and everytime view changes
-    (autoRefreshEnabled) ? handleAutoRefresh() : setFilteredFlights(flights[view]);
+    clearTimeout(refreshTimer.current);
+    (autoRefresh) ? handleAutoRefresh() : setFilteredFlights(flights[view]);
   }, [view, setView]);
 
   return (
