@@ -9,6 +9,8 @@ import {
   arrivalsUrl,
   departuresUrl,
   defaultRefresh,
+  arrivalsTestUrl,
+  departuresTestUrl,
 } from './config';
 
 // import components

@@ -4,6 +4,8 @@ import { getDateString } from '../utilities';
 import {
   arrivalsUrl,
   departuresUrl,
+  arrivalsTestUrl,
+  departuresTestUrl,
   minRefreshTime,
 } from '../config';
 

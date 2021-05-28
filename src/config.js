@@ -9,8 +9,8 @@ const departuresUrl = `${apiUrl}/departures`;
 const arrivalsTestUrl = `${apiUrl}/test/arrivals`;
 const departuresTestUrl = `${apiUrl}/test/departures`;
 
-const defaultRefresh = 60 * 1000; // default time of refreshes/updates in msecs
-const minRefreshTime = 15 * 1000; // min time between manual refreshes
+const defaultRefresh = 300 * 1000; // default time of refreshes/updates in msecs
+const minRefreshTime = 60 * 1000; // min time between manual refreshes
 
 export {
   apiUrl,
